@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_code');
             $table->date('issue_date');
             $table->date('due_date');
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')->references('id')->on('customers');
+            $table->integer('tax_percentage');
+            $table->decimal('total_amount', 10,2);
             $table->timestamps();
         });
     }

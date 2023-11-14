@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
-            $table->integer('quantity');
-            $table->decimal('amount', 10, 2);
-            $table->string('description');
+            $table->integer('product_name');
+            $table->integer('product_quantity');
+            $table->decimal('product_cost', 10, 2);
             $table->timestamps();
         });
     }

@@ -5,14 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class product extends Model
+class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['product_id', 'quantity', 'amount', 'description'];
-
-    public function product()
-    {
-        return $this->belongsTo(Product::class);
-    }
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'unit_price',
+        'quantity',
+    ];
 }

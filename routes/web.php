@@ -14,5 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('swagger-login');
+});
+
+
+Route::get('/swagger-login-success', function () {
+    return view('swagger');
 });

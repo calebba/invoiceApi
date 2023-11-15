@@ -1,190 +1,396 @@
-Invoice Management API
 
-Welcome to the Invoice Management API! This API allows you to manage invoices and associated items. Follow the steps below to set up and try out the API using Postman.
+# Project Title
 
- Getting Started
+Using the PHP laravel framework, design an invoicing REST Backend
+API.
 
-Prerequisites
+# Getting Started
 
+## Prerequisites
 1. Make sure you have [PHP](https://www.php.net/) and [Composer](https://getcomposer.org/) installed on your machine.
-2. Install [Postman](https://www.postman.com/) for API testing.
+2. Have a considerable undersatnding of laravel framework
+3. Install [Postman](https://www.postman.com/) for API testing.
+4. If you are on windows make sure you have the php extension php_sodium.dll. If not add extension=php_sodium.dll to your php.ini file
+## Installation
 
-Setup
+Clone the repository
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/calebba/invoiceApi.git
-   cd invoiceApi
+```bash
+    git clone https://github.com/calebba/invoiceApi.git
+    cd invoiceApi
+```
 
-If you are running on windows
-Add extension=php_sodium.dll to php.ini
+Install dependencies
 
-Install dependencies:
-composer install
+```bash
+    composer install
+```
 
- Set up your environment variables by copying the .env.example file to .env:
+ Environment Variables
 
-cp .env.example .env
-Update the .env file with your database configuration.
+```bash
+    cp .env.example .env
+    Update the .env file with your database configuration.
+```
 
-Generate the application key:
+Generate the application key
 
-php artisan key:generate
+```bash
+    php artisan key:generate.
+```
 
-Api Auth
-Run php artisan passport:install
-which will be used to create "personal access" and "password grant" clients which will be used to generate access client for api auth:
+Run database migration
 
-Run database migrations:
-php artisan migrate
+```bash
+    php artisan migrate
+```
 
-Start the Laravel development server:
-php artisan serve
+create "personal access" and "password grant" clients which will be used to generate access client for api auth:
 
+```bash
+    php artisan passport:install
+```
 
-Testing with Postman
-1. Open Postman.
-2. Set up your environment variables in Postman, including the base URL (e.g., http://localhost:8000).
-3. Test the API endpoints by sending requests using the provided examples.
-4. Feel free to explore and test other endpoints based on your needs.
+Start Laravel development server
 
-
-Enpoints Examples and process
-
-1. Register user and login
-Endpoint: http://localhost:8000/api/vi/register
-Method: Post
-Data: name, email and password
-Try: Register with same email and check reponse
-
-2. Login
-Endpoint: http://localhost:8000/api/vi/login
-Post: 
-Data: email and password
-Copy response token and set it as the token under Authorization
-
-       Try: You can test login with wrong credentials to check response
-
-3. Customers:
-Get customers
- 	Endpoint: http://localhost:8000/api/vi/customers
-Method: Get 
-
-Create customer
-	Endpoint: http://localhost:8000/api/vi/customers
-Method: Post 
-Data: 
-
-	{
-        "name": "Customer A",
-        "email": "customera@gmail.com",
- "phone": 0235205410,
-        "address": "Accra",
-    	}
-      {
-        "name": "Customer B",
-        "email": "customerb@gmail.com",
- "phone": 0235205411,
-        "address": "Kumasi",
-    	}
-
-Update Customer
-	Endpoint: http://localhost:8000/api/vi/customers/id
-Method: Patch 
-Data: Get id from previous customers and replace in url/endpoint. From Body in postman, use the x-wwww-form-urlencode format to state the field you want to change value and set the updated value.
+```bash
+    php artisan serve
+```
 
 
-Get customer
-	Endpoint: http://localhost:8000/api/vi/customers/id
-Method: Get 
-Data: Id from customer creation
+## API Reference
 
-Delete customer
-	Endpoint: http://localhost:8000/api/vi/customers/id
-Method: Delete 
-Data: Id from customer creation
+#### Register User
+
+```http
+  POST /api/v1/register
+```
+#### Body
+| Field | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `name` | `string` | **Required**. name |
+| `email` | `string` | **Required**.**Unique**. Email |
+| `password` | `string` | **Required**.**Min=6(words)**. password |
+
+#### Login User
+
+```http
+  POST /api/v1/login
+```
+#### Body
+| Field | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `email`      | `string` | **Required**. email used for registration |
+| `password`      | `string` | **Required**. password from registration |
+
+#### Logout User
+
+#### Authorization
+| Type | Description                       |
+| :-------- |  :-------------------------------- |
+| `token`   | **Required**. Bearer token from login |
+
+```http
+  POST /api/v1/logout/{id}
+```
+
+
+## Users
+### To use the users API, the current user mut be of user_type 2 which is the superAdmin
+#### Authorization
+| Type | Description                       |
+| :-------- |  :-------------------------------- |
+| `token`   | **Required**. Bearer token from Login|
+
+#### Get Users
+
+```http
+  GET /api/v1/Users
+```
+
+
+#### Get User
+
+```http
+  GET /api/v1/users/{id}
+```
 
 
 
-4. Products:
-Get products
- 	Endpoint: http://localhost:8000/api/vi/products
-Method: Get 
+#### Update User
 
-Create Product
-	Endpoint: http://localhost:8000/api/vi/products
-Method: Post 
-Data: 
+```http
+  PATCH /api/v1/users/{id}
+```
+#### Body
+| Field | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `name` | `string` | name |
+| `email` | `string` | **Unique**. Email |
+| `password` | `string` | **Min=6(words)**. password |
 
-	{
-        "name": "product A",
-        "unit_price": "30",
-        "quantity": "10",
-    	}
+
+#### Delete User
+
+```http
+  Delete /api/v1/users/{id}
+```
+
+
+
+## Products
+#### Authorization
+| Type | Description                       |
+| :-------- |  :-------------------------------- |
+| `token`   | **Required**. Bearer token from login |
+
+#### Get Products
+
+```http
+  GET /api/v1/products
+```
+
+#### Create Products
+
+```http
+  POST /api/v1/products
+```
+#### Body
+| Field | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `name`      | `string` | **Required**. Product name |
+| `unit_price`      | `decimal` | **Required**. Product unit price |
+| `quantity`      | `integer` | **Required**. Product initial quantity |
+
+
+#### Get Product
+
+```http
+  GET /api/v1/products/{id}
+```
+
+
+#### Update Product
+
+```http
+  PATCH /api/v1/products/{id}
+```
+#### Body
+| Field | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `name`      | `string` | Product name |
+| `unit_price`      | `decimal` | Product unit price |
+| `quantity`      | `integer` | Product initial quantity |
+
+
+#### Delete Product
+
+```http
+  Delete /api/v1/products/{id}
+```
+
+
+## Customers
+#### Authorization
+| Type | Description                       |
+| :-------- |  :-------------------------------- |
+| `token`   | **Required**. Bearer token from Login |
+
+#### Get Customers
+
+```http
+  GET /api/v1/customers
+```
+
+#### Create Customer
+
+```http
+  POST /api/v1/customers
+```
+#### Body
+| Field | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `name`      | `string` | **Required**. Customer name |
+| `email`      | `string` | **Required**. Customer email |
+| `address`      | `string` | **Required**. Customer address |
+| `phone`      | `integer` | **Required**.**Min = 10**. Customer contact|
+
+
+#### Get Customer
+
+```http
+  GET /api/v1/customers/{id}
+```
+
+
+#### Update customer
+
+```http
+  PATCH /api/v1/customer/{id}
+```
+#### Body
+| Field | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `name`      | `string` | Customer name |
+| `email`      | `string` | Customer email |
+| `address`      | `string` | Customer address |
+| `phone`      | `integer` | Customer contact|
+
+
+
+#### Delete Customer
+
+```http
+  Delete /api/v1/customers/{id}
+```
+
+
+
+## Invoices
+#### Authorization
+| Type | Description                       |
+| :-------- |  :-------------------------------- |
+| `token`   | **Required**. Bearer token from login |
+
+#### Get Invoices
+
+```http
+  GET /api/v1/invoices
+```
+
+#### Create Invoice
+
+```http
+  POST /api/v1/invoices
+```
+#### Body
+| Field | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `user_id`      | `bigint` | **Required**. Existing user Id. |
+| `invoice_code`      | `string` | **Required**.**Unique**. invoice code |
+| `due_date`      | `date` | **Required**. Date invoice was issued |
+| `customer_id`      | `date` | **Required**. Date invoice needs to be fullfilled|
+| `tax_percentage`      | `integer` | **Required** on invoice|
+| `items`      | `arary` | **Required**.**Min = 10**. Array of products seleted {}|
+
+## Item Array (All required and must be at least 1)
 {
-        "name": "product B",
-        "unit_price": "40",
-        "quantity": "50",
-    	}
-
-
-Update product
-	Endpoint: http://localhost:8000/api/vi/products/id
-Method: Patch 
-Data: Get id from previous products and replace in url/endpoint. From Body in postman, use the x-wwww-form-urlencode format to state the field you want to change value and set the updated value.
-
-
-Get product
-	Endpoint: http://localhost:8000/api/vi/products/id
-Method: Get 
-Data: Id from product creation
-
-Delete product
-	Endpoint: http://localhost:8000/api/vi/products/id
-Method: Delete 
-Data: Id from product creation
-
-
-5. Invoices:
-Get invoices
- 	Endpoint: http://localhost:8000/api/vi/invoices
-Method: Get 
-
-Create invoice
-	Endpoint: http://localhost:8000/api/vi/invoices
-Method: Post 
-Data:  Use the raw under body
-
-	{
-    "user_id": 1,
-    "invoice_code": "INV123",
-    "issue_date": "2023-01-01",
-    "due_date": "2023-01-15",
-    "customer_id": 1,
-    "tax_percentage": 10,
-    "items": [
-        {
             "product_id": 1,
             "item_quantity": 2,
             "item_unit_price": 30,
             "description": "Description for Item 1"
-        },
-        {
-            "product_id": 2,
-            "item_quantity": 3,
-            "item_unit_price": 40,
-            "description": "Description for Item 2"
         }
-    ]
-}
 
-Update invoice
-	Endpoint: http://localhost:8000/api/vi/invoice/id
-Method: Patch 
-Data: Get id from previous invoice. Use raw again:
-change value to see the how updates work.
+
+#### Get Invoice
+
+```http
+  GET /api/v1/invoices/{id}
+```
+
+
+#### Update Invoice
+
+```http
+  PATCH /api/v1/customer/{id}
+```
+#### Body
+| Field | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `user_id`      | `bigint` | **Required**. Existing user Id. |
+| `invoice_code`      | `string` | **Required**.**Unique**. invoice code |
+| `due_date`      | `date` | **Required**. Date invoice was issued |
+| `customer_id`      | `date` | **Required**. Date invoice needs to be fullfilled|
+| `tax_percentage`      | `integer` | **Required** on invoice|
+| `items`      | `arary` | **Required**.**Min = 10**. Array of products seleted {}|
+
+## Item Array (All required and must be at least 1)
 {
+            "product_id": 1,
+            "item_quantity": 2,
+            "item_unit_price": 30,
+            "description": "Description for Item 1"
+        }
 
+
+#### Delete Invoice
+
+```http
+  Delete /api/v1/invoices/{id}
+```
+
+
+## Sample Data / Examples
+
+```json
+    ### Customers
+
+    #### Customer A 
+    {
+        "name": "Customer A",
+        "email": "customera@gmail.com",
+        "phone": 0235205410,
+        "address": "Accra",
+    	}
+
+    #### Customer B
+      {
+        "name": "Customer B",
+        "email": "customerb@gmail.com",
+        "phone": 0235205411,
+        "address": "Kumasi",
+    }
+```
+
+
+```json
+    ### Products
+
+    #### Product A   
+    {
+        "name": "product A",
+        "unit_price": "30",
+        "quantity": "10",
+    	}
+
+    #### Product B
+      {
+        "name": "product B",
+        "unit_price": "40",
+        "quantity": "50",
+    }
+```
+
+
+```json
+    ### Invoice
+
+    #### Create Invoice : Use  Raw under Body 
+    {
+        "user_id": 1,
+        "invoice_code": "INV123",
+        "issue_date": "2023-01-01",
+        "due_date": "2023-01-15",
+        "customer_id": 1,
+        "tax_percentage": 10,
+        "items": [
+            {
+                "product_id": 1,
+                "item_quantity": 2,
+                "item_unit_price": 30,
+                "description": "Description for Item 1"
+            },
+            {
+                "product_id": 2,
+                "item_quantity": 3,
+                "item_unit_price": 40,
+                "description": "Description for Item 2"
+            }
+        ]
+    }
+
+    #### Invoice created: Put this in Raw under body and update values to check updates
+   {
         "user_id": 1,
         "invoice_code": "INV123",
         "issue_date": "2023-01-01",
@@ -221,24 +427,6 @@ change value to see the how updates work.
             }
         ]
     
-}
-
-
-
-Get invoice
-	Endpoint: http://localhost:8000/api/vi/invoices/id
-Method: Get 
-Data: Id from product invoices
-
-Delete invoice
-	Endpoint: http://localhost:8000/api/vi/invoices/id
-Method: Delete 
-Data: Id from invoices creation
-
-
-
-	
-
-Happy testing!
- 
+    }
+```
 

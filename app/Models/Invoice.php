@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Item;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Invoice extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['issue_date', 'due_date', 'customer_id'];
+    /**
+	 * mass assignable properties
+	 *
+	 * @var array
+	 */
+	protected $guarded = [];
 
     public function items()
     {

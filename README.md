@@ -70,7 +70,7 @@ Get customers
  	Endpoint: http://localhost:8000/api/vi/customers
 Method: Get 
 
-Create customers
+Create customer
 	Endpoint: http://localhost:8000/api/vi/customers
 Method: Post 
 Data: 
@@ -88,18 +88,18 @@ Data:
         "address": "Kumasi",
     	}
 
-Update Customers
+Update Customer
 	Endpoint: http://localhost:8000/api/vi/customers/id
 Method: Patch 
 Data: Get id from previous customers and replace in url/endpoint. From Body in postman, use the x-wwww-form-urlencode format to state the field you want to change value and set the updated value.
 
 
-Get product
+Get customer
 	Endpoint: http://localhost:8000/api/vi/customers/id
 Method: Get 
 Data: Id from customer creation
 
-Delete product
+Delete customer
 	Endpoint: http://localhost:8000/api/vi/customers/id
 Method: Delete 
 Data: Id from customer creation
@@ -111,7 +111,7 @@ Get products
  	Endpoint: http://localhost:8000/api/vi/products
 Method: Get 
 
-Create Products
+Create Product
 	Endpoint: http://localhost:8000/api/vi/products
 Method: Post 
 Data: 
@@ -225,12 +225,12 @@ change value to see the how updates work.
 
 
 
-Get invoices
+Get invoice
 	Endpoint: http://localhost:8000/api/vi/invoices/id
 Method: Get 
 Data: Id from product invoices
 
-Delete invoices
+Delete invoice
 	Endpoint: http://localhost:8000/api/vi/invoices/id
 Method: Delete 
 Data: Id from invoices creation

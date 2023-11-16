@@ -271,7 +271,7 @@ Start Laravel development server
 | `due_date`      | `date` | **Required**. Date invoice was issued |
 | `customer_id`      | `date` | **Required**. Date invoice needs to be fullfilled|
 | `tax_percentage`      | `integer` | **Required** on invoice|
-| `items`      | `arary` | **Required**.**Min = 1**. Array of products seleted {}|
+| `items`      | `arary` | **Required**.**Min=1**. Array of products seleted {}|
 
 ## Item Array (All required and must be at least 1)
 {
@@ -302,7 +302,7 @@ Start Laravel development server
 | `due_date`      | `date` | **Required**. Date invoice was issued |
 | `customer_id`      | `date` | **Required**. Date invoice needs to be fullfilled|
 | `tax_percentage`      | `integer` | **Required** on invoice|
-| `items`      | `arary` | **Required**.**Min = 1**. Array of products seleted {}|
+| `items`      | `arary` | **Required**.**Min=1**. Array of products seleted {}|
 
 ## Item Array (All required and must be at least 1)
 {
